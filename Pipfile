@@ -1,0 +1,22 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+isort = {extras = ["pipfile"],version = "*"}
+flake8 = "*"
+django = "*"
+setuptools = "*"
+wheel = "*"
+twine = "*"
+sphinx = "*"
+coverage = "*"
+django-otp-notify = {editable = true,path = "."}
+freezegun = "*"
+bumpversion = "*"
+
+[packages]
+
+[requires]
+python_version = "3.7"
