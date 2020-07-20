@@ -5,11 +5,11 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-otp-notify',
-    version='0.1.0',
+    version='0.1.1',
     description="A django-otp plugin that delivers tokens via Notify's SMS service.",
     author="Pierre-Paul Lefebvre, Peter Sagerson",
     author_email='pierre-paul.lefebvre@cds-snc.ca',
-    url='https://github.com/django-otp/django-otp-notify',
+    url='https://github.com/PierrePaul/django-otp-notify',
     project_urls={
         "Documentation": 'https://django-otp-notify.readthedocs.io/',
         "Source": 'https://github.com/django-otp/django-otp-notify',
