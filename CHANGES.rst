@@ -1,4 +1,4 @@
-v0.1.1 - July 20, 2020 - July 20, 2020 Source update
+vv0.1.1 - July 20, 2020 - July 20, 2020 - July 20, 2020 Source update
 -------------------------------------------------------------------------------
 
 Updating link for the documentation.
