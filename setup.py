@@ -29,7 +29,6 @@ setup(
     packages=find_packages(where='src'),
     install_requires=[
         'django-otp >= 0.9.0',
-        'requests',
         'notifications-python-client',
     ],
 )

@@ -6,7 +6,9 @@ from django.utils.encoding import force_text
 
 from django_otp.models import SideChannelDevice, ThrottlingMixin
 from django_otp.util import hex_validator, random_hex
-import requests
+
+from notifications_python_client.errors import HTTPError
+from notifications_python_client.notifications import NotificationsAPIClient
 
 from .conf import settings
 
@@ -54,7 +56,6 @@ class NotifySMSDevice(ThrottlingMixin, SideChannelDevice):
         """
         Sends the current TOTP token to ``self.number``.
 
-        :returns: :setting:`OTP_NOTIFY_CHALLENGE_MESSAGE` on success.
         :raises: Exception if delivery fails.
 
         """
@@ -66,9 +67,7 @@ class NotifySMSDevice(ThrottlingMixin, SideChannelDevice):
         else:
             self._deliver_token(self.token)
 
-        challenge = settings.OTP_NOTIFY_CHALLENGE_MESSAGE.format(token=self.token)
-
-        return challenge
+        return self.token
 
     def _deliver_token(self, token):
         self._validate_config()
@@ -77,16 +76,20 @@ class NotifySMSDevice(ThrottlingMixin, SideChannelDevice):
             base_url=settings.OTP_NOTIFY_ENDPOINT
         )
 
-        response = notifications_client.send_sms_notification(
-            phone_number=self.number,
-            template_id=settings.OTP_NOTIFY_TEMPLATE_ID,
-            sms_sender_id=settings.OTP_NOTIFY_SENDER_ID,
-            personalisation={'token': token},
-        )
+        try:
+            print(self.number)
+            response = notifications_client.send_sms_notification(
+                phone_number=self.number,
+                template_id=settings.OTP_NOTIFY_TEMPLATE_ID,
+                # sms_sender_id=settings.OTP_NOTIFY_SENDER_ID,
+                personalisation={'token': token},
+            )
+            print(response)
+        except HTTPError as e:
+            logger.exception(e.message)
+            raise Exception(e.message[0].get("message"))
 
-        if response.status_code != 200:
-            logger.exception(response.message)
-            raise Exception(response.message)
+        return response
 
     def _validate_config(self):
         if settings.OTP_NOTIFY_API_KEY is None:
