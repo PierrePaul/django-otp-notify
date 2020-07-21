@@ -1,4 +1,9 @@
-vv0.3.0 - July 21, 2020 - July 20, 2020 Source update
+v0.3.0 - July 21, 2020 
+-------------------------------------------------------------------------------
+
+Remove some leftover debugging and re-enabling SENDER_ID.
+
+v0.2.0 - July 20, 2020 Source update
 -------------------------------------------------------------------------------
 
 Updating link for the documentation.
