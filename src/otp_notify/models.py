@@ -77,14 +77,12 @@ class NotifySMSDevice(ThrottlingMixin, SideChannelDevice):
         )
 
         try:
-            print(self.number)
             response = notifications_client.send_sms_notification(
                 phone_number=self.number,
                 template_id=settings.OTP_NOTIFY_TEMPLATE_ID,
-                # sms_sender_id=settings.OTP_NOTIFY_SENDER_ID,
+                sms_sender_id=settings.OTP_NOTIFY_SENDER_ID,
                 personalisation={'token': token},
             )
-            print(response)
         except HTTPError as e:
             logger.exception(e.message)
             raise Exception(e.message[0].get("message"))
